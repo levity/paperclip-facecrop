@@ -12,5 +12,6 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.files = `git ls-files`.split("\n")
   s.has_rdoc = false
-  s.add_runtime_dependency("paperclip")
+  s.add_runtime_dependency 'paperclip'
+  s.add_runtime_dependency 'unirest'
 end

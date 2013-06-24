@@ -94,8 +94,8 @@ only the found areas that contain parts like a mouth, an eye or a nose will be c
 ### lambdal.com
 
           Paperclip::FaceCrop.detectors = {
-            'LambdaLabs' => {:mashape_authorization => "<YOUR API KEY>"}
-          }  
+            'LambdaLabs' => {:mashape_key => "<YOUR API KEY>"}
+          }
 
 
 
