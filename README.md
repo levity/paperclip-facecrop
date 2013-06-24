@@ -1,6 +1,6 @@
 Paperclip::FaceCrop
 ====================
-`Paperclip::FaceCrop` is a [Paperclip][paperclip] processor that is aware of the faces found on the image 
+`Paperclip::FaceCrop` is a [Paperclip][paperclip] processor that is aware of the faces found on the image
 so that they aren't cropped or aren't shown too small while generating the thumbnails.
 It can use the [OpenCV][opencv] library, the [Face.com][face_com] or [LambdaLabs][lambda_labs] web service(or all three at the same time) for the facial recognition.
 
@@ -18,7 +18,7 @@ If you want to use OpenCV on your own server, you need to install:
 
 In case you get the error message `/ext/opencv/cverror.cpp:143: error: ‘CV_GpuCufftCallError’ was not declared in this scope` while installing the ruby binding,
 checkout the OpenCV_2.2 branch or just remove the line 143 from `/ext/opencv/cverror.cpp`
-          
+
 
 ### Face.com
 - [rest-client][rest-client]
@@ -37,30 +37,30 @@ Installation:
 - Add to your application `Gemfile`
 
           gem 'paperclip-facecrop'
-          
+
 - Type
-          
+
           bundle install
 
 
-- Write an initializer setting the detectors configuration (`initializers/paperclip.rb` for example):   
+- Write an initializer setting the detectors configuration (`initializers/paperclip.rb` for example):
 
 ### OpenCV
 
 Set the path of the haarcascade filters:
 
           Paperclip::FaceCrop.detectors = {
-            'OpenCV' =>  { 
+            'OpenCV' =>  {
               :face => %w(/usr/local/share/opencv/haarcascades/haarcascade_frontalface_alt_tree.xml)
             }
           }
 
-          
-              
+
+
 You can use more than one filter to try more accurate searches:
-    
+
           Paperclip::FaceCrop.detectors = {
-            'OpenCV' =>  { 
+            'OpenCV' =>  {
               :face => %w(/usr/local/share/opencv/haarcascades/haarcascade_frontalface_alt_tree.xml
                           /usr/local/share/opencv/haarcascades/haarcascade_frontalface_alt.xml
                           /usr/local/share/opencv/haarcascades/haarcascade_profileface.xml)
@@ -69,27 +69,27 @@ You can use more than one filter to try more accurate searches:
 
 
 
-In order to try to avoid some false positives, you can also specify other classifiers to detect other parts of the face. In that case, 
+In order to try to avoid some false positives, you can also specify other classifiers to detect other parts of the face. In that case,
 only the found areas that contain parts like a mouth, an eye or a nose will be considered a face:
-    
+
           Paperclip::FaceCrop.detectors = {
-            'OpenCV' =>  { 
+            'OpenCV' =>  {
               :face => %w(/usr/local/share/opencv/haarcascades/haarcascade_frontalface_alt_tree.xml
                           /usr/local/share/opencv/haarcascades/haarcascade_frontalface_alt.xml
                           /usr/local/share/opencv/haarcascades/haarcascade_profileface.xml),
-              
+
               :parts => %w(/usr/local/share/opencv/haarcascades/haarcascade_mcs_nose.xml
                            /usr/local/share/opencv/haarcascades/haarcascade_mcs_lefteye.xml
                            /usr/local/share/opencv/haarcascades/haarcascade_mcs_righteye.xml)
             }
           }
-          
-    
+
+
 ### Face.com
 
           Paperclip::FaceCrop.detectors = {
             'FaceCom' => { :api_key => "<YOUR API KEY>", :api_secret => "<YOUR API SECRET>"}
-          }    
+          }
 
 ### lambdal.com
 
@@ -102,28 +102,28 @@ only the found areas that contain parts like a mouth, an eye or a nose will be c
 Usage:
 ------
 Just specify your image styles as usual and set :face_crop as the processor:
-    
+
     class Image < ActiveRecord::Base
 
-      has_attached_file :attachment, 
-          :styles => {:thumbnail => "200x125#"}, 
+      has_attached_file :attachment,
+          :styles => {:thumbnail => "200x125#"},
           :processors => [:face_crop]
     end
-    
+
 In case no faces were found, it will behave simply as the `Paperclip::Thumbnail` processor
 
 
 You can also set the debug mode to draw on the image the detected regions:
-    
+
     Paperclip::FaceCrop.debug = Rails.env.development?
-    
+
 ![](https://github.com/dagi3d/paperclip-facecrop/raw/master/README_example_b.jpg)
 
 Each detector will draw the found regions in different colors(Face.com detector in red and OpenCV in green)
 
 Credits:
 --------
-Copyright (c) 2011 Borja Martín Sánchez de Vivar <borjamREMOVETHIS@dagi3d.net> - <http://dagi3d.net>, released under the MIT license  
+Copyright (c) 2011 Borja Martín Sánchez de Vivar <borjamREMOVETHIS@dagi3d.net> - <http://dagi3d.net>, released under the MIT license
 The photo used as example belongs to [Jesper Rønn-Jensen](http://www.flickr.com/photos/jesper/)
 
 [face_com]: http://face.com
